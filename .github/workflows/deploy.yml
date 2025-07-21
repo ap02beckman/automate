@@ -30,19 +30,6 @@ jobs:
         run: |
           flake8 .
 
-      - name: Run tests
-        shell: bash
-        run: |
-          pytest
-
-      - name: Run build script
-        shell: bash
-        run: bash build.sh
-
-      - name: Run deploy script
-        shell: bash
-        run: bash deploy.sh
-
       - name: Check formatting with black
         shell: bash
         run: |
@@ -51,9 +38,9 @@ jobs:
       - name: Run tests with coverage
         shell: bash
         run: |
-              coverage run -m pytest
-              coverage report
-              
+          coverage run -m pytest
+          coverage report
+
       - name: Generate HTML coverage report
         shell: bash
         run: coverage html
@@ -61,6 +48,13 @@ jobs:
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
-            name: coverage-report
-            path: htmlcov/
+          name: coverage-report
+          path: htmlcov/
 
+      - name: Run build script
+        shell: bash
+        run: bash build.sh
+
+      - name: Run deploy script
+        shell: bash
+        run: bash deploy.sh
