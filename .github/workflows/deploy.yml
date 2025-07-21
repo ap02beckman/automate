@@ -25,6 +25,11 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      - name: Lint with flake8
+        shell: bash
+        run: |
+          flake8 .
+
       - name: Run tests
         shell: bash
         run: |
@@ -37,3 +42,9 @@ jobs:
       - name: Run deploy script
         shell: bash
         run: bash deploy.sh
+
+      - name: Check formatting with black
+        shell: bash
+        run: |
+          black --check .
+
