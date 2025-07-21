@@ -1,4 +1,4 @@
-name: Python CI
+name: Python CI/CD
 
 on:
   push:
@@ -7,25 +7,30 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'  # specify your Python version, e.g. 3.8, 3.9
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'  # Python version like 3.9 or 3.11
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Run tests
-      run: |
-        # Replace this with your test command, for example pytest
-        pytest
+      - name: Run tests
+        run: |
+          # Replace this with your actual test command
+          pytest
+
+      - name: Run build script
+        run: bash build.sh
+
+      - name: Run deploy script
+        run: bash deploy.sh
