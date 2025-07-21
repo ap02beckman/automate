@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: Windows-latest
+    runs-on: windows-latest  # Note: Windows with lowercase 'w'
 
     steps:
       - name: Checkout code
@@ -20,17 +20,21 @@ jobs:
           python-version: '3.x'  # Python version like 3.9 or 3.11
 
       - name: Install dependencies
+        shell: bash  # Force Bash shell on Windows
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run tests
+        shell: bash
         run: |
           # Replace this with your actual test command
           pytest
 
       - name: Run build script
+        shell: bash
         run: bash build.sh
 
       - name: Run deploy script
+        shell: bash
         run: bash deploy.sh
